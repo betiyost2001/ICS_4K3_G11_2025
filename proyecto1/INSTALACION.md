@@ -26,8 +26,10 @@ npm install
 Crear archivo `.env` en la carpeta `backend`:
 ```bash
 # Email Configuration
-EMAIL_USER=tu-email@gmail.com
-EMAIL_PASS=tu-password-app
+EMAIL_USER= mail que sale
+EMAIL_PASS= pass del mail que sale
+
+EMAIL_USER_TO=mail desde cual llega
 
 # MercadoPago (opcional - para pagos reales)
 MP_ACCESS_TOKEN=tu-access-token-de-mercadopago
@@ -64,14 +66,6 @@ npm run dev
 ```bash
 npm install -g ngrok
 ```
-
-#### 4.2 Iniciar Túnel
-```bash
-cd tunnel
-npm install
-npm start
-```
-✅ **URL pública generada:** `https://xxx.ngrok-free.dev`
 
 ## 🎯 Verificar Instalación
 
@@ -144,11 +138,6 @@ npm run test:watch   # Tests en modo watch
 npm run dev          # Desarrollo
 npm run build        # Build de producción
 npm run start        # Servidor de producción
-```
-
-### Túnel
-```bash
-npm start            # Iniciar túnel ngrok
 ```
 
 ## 📞 Soporte
