@@ -1,0 +1,189 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(19, 70, 17, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    border-radius: 15px;
+    max-height: 95vh;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px 20px;
+  border-bottom: 1px solid rgba(62, 137, 20, 0.1);
+}
+
+@media (max-width: 768px) {
+  .modal-header {
+    padding: 20px 20px 15px;
+  }
+  
+  .modal-header h2 {
+    font-size: 20px;
+  }
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: var(--primary-medium);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+  background: rgba(62, 137, 20, 0.1);
+}
+
+.modal-content form {
+  padding: 20px 40px 40px;
+}
+
+@media (max-width: 768px) {
+  .modal-content form {
+    padding: 15px 20px 30px;
+  }
+}
+
+.welcome-section {
+  text-align: center;
+  color: white;
+  margin-top: 100px;
+  padding: 0 20px;
+}
+
+.welcome-section h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-section p {
+  font-size: 20px;
+  font-weight: 300;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .welcome-section {
+    margin-top: 50px;
+  }
+  
+  .welcome-section h1 {
+    font-size: 32px;
+  }
+  
+  .welcome-section p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-section h1 {
+    font-size: 24px;
+  }
+  
+  .welcome-section p {
+    font-size: 14px;
+  }
+}
+
+.ticket-section {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .ticket-section {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    top: auto;
+    transform: none;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-medium), var(--primary-light));
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(62, 137, 20, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .btn-primary {
+    padding: 12px 20px;
+    font-size: 14px;
+    gap: 8px;
+  }
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(62, 137, 20, 0.4);
+}
