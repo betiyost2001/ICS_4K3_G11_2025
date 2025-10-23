@@ -33,15 +33,16 @@ let MercadoPagoService = class MercadoPagoService {
             ],
             payment_methods: {
                 excluded_payment_methods: [],
-                excluded_payment_types: [],
-                installments: 12
+                excluded_payment_types: []
             },
             back_urls: {
-                success: 'https://incidentally-unmined-enriqueta.ngrok-free.dev/payment-success-page',
-                failure: 'https://incidentally-unmined-enriqueta.ngrok-free.dev/payment-failure-page',
-                pending: 'https://incidentally-unmined-enriqueta.ngrok-free.dev/payment-pending-page',
+                success: 'www.localhost:3000/payment-success-page',
+                failure: 'http://localhost:3000/payment-failure-page',
+                pending: 'http://localhost:3000/payment-pending-page',
             },
+            auto_return: 'approved',
             external_reference: ticketData.reservationCode,
+            notification_url: 'http://localhost:3001/webhooks/mercadopago',
             metadata: {
                 ticket_details: JSON.stringify(ticketData.ticketDetails || [])
             }

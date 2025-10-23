@@ -1,4 +1,4 @@
-// File: /Users/leanavram/Documents/ISW/proyecto1/frontend/src/app/payment-success-page/page.tsx
+// File: /Users/leanavram/Documents/facu/ICS_4K3_G11_2025/proyecto1/frontend/src/app/payment-success-page/page.tsx
 import * as entry from '../../../../src/app/payment-success-page/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

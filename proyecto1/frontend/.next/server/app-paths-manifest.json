@@ -1,4 +1,6 @@
 {
+  "/not-found": "app/not-found.js",
+  "/page": "app/page.js",
   "/payment-success-page/page": "app/payment-success-page/page.js",
-  "/page": "app/page.js"
+  "/cash-payment/page": "app/cash-payment/page.js"
 }

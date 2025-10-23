@@ -50,7 +50,7 @@ let TicketsService = class TicketsService {
     }
     validateVisitorAges(visitors) {
         for (const visitor of visitors) {
-            if (visitor.age < 0 || visitor.age > 100) {
+            if (visitor.age < 1 || visitor.age > 100) {
                 throw new common_1.BadRequestException('Las edades deben estar entre 0 y 100 años');
             }
         }
@@ -118,7 +118,7 @@ let TicketsService = class TicketsService {
                 totalAmount: ticketSummary.totalAmount,
                 ticketDetails: ticketSummary.ticketDetails
             });
-            paymentUrl = preference.sandbox_init_point || preference.init_point;
+            paymentUrl = preference.init_point;
         }
         return {
             ticket,

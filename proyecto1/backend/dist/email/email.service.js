@@ -17,8 +17,8 @@ let EmailService = class EmailService {
             port: 587,
             secure: false,
             auth: {
-                user: 'parkecoharmony@gmail.com',
-                pass: 'vwul mqzv jsgd mtww',
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
             },
         });
     }
@@ -50,8 +50,8 @@ let EmailService = class EmailService {
             }));
         }
         await this.transporter.sendMail({
-            from: 'parkecoharmony@gmail.com',
-            to: 'leoavram7@gmail.com',
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_USER_TO,
             subject: ticket.paymentMethod === 'cash' ? 'Confirmación de Reserva - EcoHarmony Park' : 'Entradas Confirmadas - EcoHarmony Park',
             html,
             attachments
