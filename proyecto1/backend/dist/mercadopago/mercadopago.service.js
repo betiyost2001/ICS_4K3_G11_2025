@@ -31,18 +31,26 @@ let MercadoPagoService = class MercadoPagoService {
                     currency_id: 'ARS',
                 },
             ],
+            default_payment_method_id: 'credit_card',
             payment_methods: {
                 excluded_payment_methods: [],
-                excluded_payment_types: []
+                excluded_payment_types: [
+                    { id: 'debit_card' },
+                    { id: 'ticket' },
+                    { id: 'bank_transfer' },
+                    { id: 'atm' },
+                    { id: 'prepaid_card' }
+                ],
+                installments: 12
             },
             back_urls: {
                 success: 'www.localhost:3000/payment-success-page',
-                failure: 'http://localhost:3000/payment-failure-page',
-                pending: 'http://localhost:3000/payment-pending-page',
+                failure: 'www.localhost:3000/payment-failure-page',
+                pending: 'www.localhost:3000/payment-pending-page',
             },
             auto_return: 'approved',
             external_reference: ticketData.reservationCode,
-            notification_url: 'http://localhost:3001/webhooks/mercadopago',
+            notification_url: 'www.localhost:3001/webhooks/mercadopago',
             metadata: {
                 ticket_details: JSON.stringify(ticketData.ticketDetails || [])
             }
