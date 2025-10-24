@@ -28,8 +28,8 @@ describe('TicketsService', () => {
     mockMercadoPagoService = module.get(MercadoPagoService);
   });
 
-  describe('Validar compra de boleto', () => {
-    it('Debería pasar con datos válidos', () => {
+  describe('validar compra de boleto', () => {
+    it('debería pasar con datos válidos', () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -42,7 +42,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).not.toThrow();
     });
 
-    it('Debería fallar cuando la cantidad exceda 10', () => {
+    it('debería fallar cuando la cantidad exceda 10', () => {
       const dto: CreateTicketDto = {
         visitDate: '2024-12-25',
         quantity: 11,
@@ -53,7 +53,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('Debería fallar cuando la fecha de la visita ya es pasada', () => {
+    it('debería fallar cuando la fecha de la visita ya es pasada', () => {
       const dto: CreateTicketDto = {
         visitDate: '2020-01-01',
         quantity: 2,
@@ -64,7 +64,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('Debería fallar cuando el parque esté cerrado los lunes.', () => {
+    it('debería fallar cuando el parque esté cerrado los lunes', () => {
       const futureDate = new Date();
       futureDate.setDate(futureDate.getDate() + 7);
       while (futureDate.getDay() !== 1) {
@@ -81,7 +81,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('Debería fallar cuando el parque esté cerrado en Navidad (25 de diciembre)', () => {
+    it('debería fallar cuando el parque esté cerrado en Navidad (25 de diciembre)', () => {
       const dto: CreateTicketDto = {
         visitDate: '2025-12-25',
         quantity: 2,
@@ -92,7 +92,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('Debería fallar cuando el parque esté cerrado el día de Año Nuevo (1 de enero)', () => {
+    it('debería fallar cuando el parque esté cerrado el día de Año Nuevo (1 de enero)', () => {
       const dto: CreateTicketDto = {
         visitDate: '2026-01-01',
         quantity: 2,
@@ -103,7 +103,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('Debería fallar cuando el visitante tiene edad negativa', () => {
+    it('debería fallar cuando el visitante tiene edad negativa', () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -116,7 +116,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('Debería fallar cuando la edad del visitante supere los 100 años', () => {
+    it('debería fallar cuando la edad del visitante supere los 100 años', () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -129,7 +129,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('Debería pasar el martes (parque abierto)', () => {
+    it('debería pasar el martes (parque abierto)', () => {
       const futureDate = new Date();
       futureDate.setDate(futureDate.getDate() + 7);
       while (futureDate.getDay() !== 2) {
@@ -146,7 +146,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).not.toThrow();
     });
 
-    it('Debería pasar el domingo (parque abierto)', () => {
+    it('debería pasar el domingo (parque abierto)', () => {
       const futureDate = new Date();
       futureDate.setDate(futureDate.getDate() + 7); 
       while (futureDate.getDay() !== 0) { 
@@ -164,22 +164,22 @@ describe('TicketsService', () => {
     });
   });
 
-  describe('Calcular precio de boleto', () => {
-    it('Debería calcularse el precio completo para adultos (16-59 años)', () => {
+  describe('calcular precio de boleto', () => {
+    it('debería calcularse el precio completo para adultos (16-59 años)', () => {
       const pricing = service.calculateTicketPricing(25, PassType.REGULAR);
       expect(pricing.basePrice).toBe(5000);
       expect(pricing.finalPrice).toBe(5000);
       expect(pricing.discount).toBe(0);
     });
 
-    it('Debería calcularse el precio completo VIP para adultos', () => {
+    it('debería calcularse el precio completo VIP para adultos', () => {
       const pricing = service.calculateTicketPricing(30, PassType.VIP);
       expect(pricing.basePrice).toBe(10000);
       expect(pricing.finalPrice).toBe(10000);
       expect(pricing.discount).toBe(0);
     });
 
-    it('Debería ser gratuito para niños de 3 años o menos.', () => {
+    it('debería ser gratuito para niños de 3 años o menos', () => {
       const pricing = service.calculateTicketPricing(3, PassType.REGULAR);
       expect(pricing.basePrice).toBe(5000);
       expect(pricing.finalPrice).toBe(0);
@@ -187,7 +187,7 @@ describe('TicketsService', () => {
       expect(pricing.discountReason).toBe('Gratis (3 años o menos)');
     });
 
-    it('Debería haber un descuento del 50% para niños de 4 a 15 años', () => {
+    it('debería haber un descuento del 50% para niños de 4 a 15 años', () => {
       const pricing = service.calculateTicketPricing(10, PassType.REGULAR);
       expect(pricing.basePrice).toBe(5000);
       expect(pricing.finalPrice).toBe(2500);
@@ -195,7 +195,7 @@ describe('TicketsService', () => {
       expect(pricing.discountReason).toBe('50% descuento (4-15 años)');
     });
 
-    it('Debería haber un descuento del 50% para personas mayores de 60 años', () => {
+    it('debería haber un descuento del 50% para personas mayores de 60 años', () => {
       const pricing = service.calculateTicketPricing(65, PassType.VIP);
       expect(pricing.basePrice).toBe(10000);
       expect(pricing.finalPrice).toBe(5000);
@@ -204,8 +204,8 @@ describe('TicketsService', () => {
     });
   });
 
-  describe('Calcular ticket', () => {
-    it('Debería calcularse el total para edades mixtas y tipos de pases', () => {
+  describe('calcular ticket', () => {
+    it('debería calcularse el total para edades mixtas y tipos de pases', () => {
       const dto: CreateTicketDto = {
         visitDate: '2024-12-25',
         quantity: 4,
@@ -220,13 +220,13 @@ describe('TicketsService', () => {
 
       const summary = service.calculateTicketSummary(dto);
       expect(summary.totalTickets).toBe(4);
-      expect(summary.totalAmount).toBe(0 + 5000 + 5000 + 5000); // 15000
+      expect(summary.totalAmount).toBe(0 + 5000 + 5000 + 5000); 
       expect(summary.ticketDetails).toHaveLength(4);
     });
   });
 
   describe('crear ticket', () => {
-    it('Debería crear un ticket con un resumen de precios', async () => {
+    it('debería crear un ticket con un resumen de precios', async () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -244,7 +244,7 @@ describe('TicketsService', () => {
       expect(result.paymentUrl).toContain('mercadopago.com');
     });
 
-    it('Debería crear un ticket sin URL de pago para el pago en efectivo', async () => {
+    it('debería crear un ticket sin URL de pago para el pago en efectivo', async () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
