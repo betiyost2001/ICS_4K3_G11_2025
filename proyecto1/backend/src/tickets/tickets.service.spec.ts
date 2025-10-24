@@ -28,8 +28,8 @@ describe('TicketsService', () => {
     mockMercadoPagoService = module.get(MercadoPagoService);
   });
 
-  describe('validateTicketPurchase', () => {
-    it('should pass with valid data', () => {
+  describe('Validar compra de boleto', () => {
+    it('Debería pasar con datos válidos', () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -42,7 +42,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).not.toThrow();
     });
 
-    it('should fail when quantity exceeds 10', () => {
+    it('Debería fallar cuando la cantidad exceda 10', () => {
       const dto: CreateTicketDto = {
         visitDate: '2024-12-25',
         quantity: 11,
@@ -53,7 +53,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('should fail when visit date is in the past', () => {
+    it('Debería fallar cuando la fecha de la visita ya es pasada', () => {
       const dto: CreateTicketDto = {
         visitDate: '2020-01-01',
         quantity: 2,
@@ -64,10 +64,10 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('should fail when park is closed on Mondays', () => {
+    it('Debería fallar cuando el parque esté cerrado los lunes.', () => {
       const futureDate = new Date();
-      futureDate.setDate(futureDate.getDate() + 7); // Next week
-      while (futureDate.getDay() !== 1) { // Find next Monday
+      futureDate.setDate(futureDate.getDate() + 7);
+      while (futureDate.getDay() !== 1) {
         futureDate.setDate(futureDate.getDate() + 1);
       }
       
@@ -81,9 +81,9 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('should fail when park is closed on Christmas (Dec 25)', () => {
+    it('Debería fallar cuando el parque esté cerrado en Navidad (25 de diciembre)', () => {
       const dto: CreateTicketDto = {
-        visitDate: '2025-12-25', // Future Christmas
+        visitDate: '2025-12-25',
         quantity: 2,
         visitors: [{ age: 25, passType: PassType.REGULAR }, { age: 30, passType: PassType.VIP }],
         paymentMethod: PaymentMethod.CREDIT_CARD
@@ -92,9 +92,9 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('should fail when park is closed on New Year (Jan 1)', () => {
+    it('Debería fallar cuando el parque esté cerrado el día de Año Nuevo (1 de enero)', () => {
       const dto: CreateTicketDto = {
-        visitDate: '2026-01-01', // Future New Year
+        visitDate: '2026-01-01',
         quantity: 2,
         visitors: [{ age: 25, passType: PassType.REGULAR }, { age: 30, passType: PassType.VIP }],
         paymentMethod: PaymentMethod.CREDIT_CARD
@@ -103,7 +103,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('should fail when visitor has negative age', () => {
+    it('Debería fallar cuando el visitante tiene edad negativa', () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -116,7 +116,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('should fail when visitor age exceeds 100', () => {
+    it('Debería fallar cuando la edad del visitante supere los 100 años', () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -129,10 +129,10 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).toThrow(BadRequestException);
     });
 
-    it('should pass on Tuesday (park open)', () => {
+    it('Debería pasar el martes (parque abierto)', () => {
       const futureDate = new Date();
-      futureDate.setDate(futureDate.getDate() + 7); // Next week
-      while (futureDate.getDay() !== 2) { // Find next Tuesday
+      futureDate.setDate(futureDate.getDate() + 7);
+      while (futureDate.getDay() !== 2) {
         futureDate.setDate(futureDate.getDate() + 1);
       }
       
@@ -146,7 +146,7 @@ describe('TicketsService', () => {
       expect(() => service.validateTicketPurchase(dto)).not.toThrow();
     });
 
-    it('should pass on Sunday (park open)', () => {
+    it('Debería pasar el domingo (parque abierto)', () => {
       const futureDate = new Date();
       futureDate.setDate(futureDate.getDate() + 7); 
       while (futureDate.getDay() !== 0) { 
@@ -164,22 +164,22 @@ describe('TicketsService', () => {
     });
   });
 
-  describe('calculateTicketPricing', () => {
-    it('should calculate full price for adults (16-59 years)', () => {
+  describe('Calcular precio de boleto', () => {
+    it('Debería calcularse el precio completo para adultos (16-59 años)', () => {
       const pricing = service.calculateTicketPricing(25, PassType.REGULAR);
       expect(pricing.basePrice).toBe(5000);
       expect(pricing.finalPrice).toBe(5000);
       expect(pricing.discount).toBe(0);
     });
 
-    it('should calculate VIP full price for adults', () => {
+    it('Debería calcularse el precio completo VIP para adultos', () => {
       const pricing = service.calculateTicketPricing(30, PassType.VIP);
       expect(pricing.basePrice).toBe(10000);
       expect(pricing.finalPrice).toBe(10000);
       expect(pricing.discount).toBe(0);
     });
 
-    it('should be free for children 3 years or younger', () => {
+    it('Debería ser gratuito para niños de 3 años o menos.', () => {
       const pricing = service.calculateTicketPricing(3, PassType.REGULAR);
       expect(pricing.basePrice).toBe(5000);
       expect(pricing.finalPrice).toBe(0);
@@ -187,7 +187,7 @@ describe('TicketsService', () => {
       expect(pricing.discountReason).toBe('Gratis (3 años o menos)');
     });
 
-    it('should be 50% off for children 4-15 years', () => {
+    it('Debería haber un descuento del 50% para niños de 4 a 15 años', () => {
       const pricing = service.calculateTicketPricing(10, PassType.REGULAR);
       expect(pricing.basePrice).toBe(5000);
       expect(pricing.finalPrice).toBe(2500);
@@ -195,7 +195,7 @@ describe('TicketsService', () => {
       expect(pricing.discountReason).toBe('50% descuento (4-15 años)');
     });
 
-    it('should be 50% off for seniors 60+ years', () => {
+    it('Debería haber un descuento del 50% para personas mayores de 60 años', () => {
       const pricing = service.calculateTicketPricing(65, PassType.VIP);
       expect(pricing.basePrice).toBe(10000);
       expect(pricing.finalPrice).toBe(5000);
@@ -204,16 +204,16 @@ describe('TicketsService', () => {
     });
   });
 
-  describe('calculateTicketSummary', () => {
-    it('should calculate total for mixed ages and pass types', () => {
+  describe('Calcular ticket', () => {
+    it('Debería calcularse el total para edades mixtas y tipos de pases', () => {
       const dto: CreateTicketDto = {
         visitDate: '2024-12-25',
         quantity: 4,
         visitors: [
-          { age: 2, passType: PassType.REGULAR },  // Free
-          { age: 8, passType: PassType.VIP },      // 50% off VIP
-          { age: 30, passType: PassType.REGULAR }, // Full price Regular
-          { age: 65, passType: PassType.VIP }      // 50% off VIP
+          { age: 2, passType: PassType.REGULAR },
+          { age: 8, passType: PassType.VIP },
+          { age: 30, passType: PassType.REGULAR },
+          { age: 65, passType: PassType.VIP }
         ],
         paymentMethod: PaymentMethod.CASH
       };
@@ -225,8 +225,8 @@ describe('TicketsService', () => {
     });
   });
 
-  describe('createTicket', () => {
-    it('should create ticket with pricing summary', async () => {
+  describe('crear ticket', () => {
+    it('Debería crear un ticket con un resumen de precios', async () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
@@ -240,11 +240,11 @@ describe('TicketsService', () => {
 
       expect(result.ticket).toBeDefined();
       expect(result.ticket.ticketSummary).toBeDefined();
-      expect(result.ticket.ticketSummary.totalAmount).toBe(15000); // Regular + VIP
+      expect(result.ticket.ticketSummary.totalAmount).toBe(15000);
       expect(result.paymentUrl).toContain('mercadopago.com');
     });
 
-    it('should create ticket without payment URL for cash payment', async () => {
+    it('Debería crear un ticket sin URL de pago para el pago en efectivo', async () => {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dto: CreateTicketDto = {
