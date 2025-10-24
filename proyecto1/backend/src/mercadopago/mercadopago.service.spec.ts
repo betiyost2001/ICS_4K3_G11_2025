@@ -77,9 +77,9 @@ describe('MercadoPagoService', () => {
     expect(mockCreate).toHaveBeenCalledWith({
       body: expect.objectContaining({
         back_urls: {
-          success: 'http://localhost:3000/payment-success-page',
-          failure: 'http://localhost:3000/payment-failure-page',
-          pending: 'http://localhost:3000/payment-pending-page',
+          success: 'www.localhost:3000/payment-success-page',
+          failure: 'www.localhost:3000/payment-failure-page',
+          pending: 'www.localhost:3000/payment-pending-page',
         }
       })
     });
